@@ -1,0 +1,15 @@
+.custom__bg {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url("./assets/camoflage.jpg");
+    background-size: contain;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    min-height: calc(100vh);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom__army-color--bg {
+    background: #475C3B;
+}
