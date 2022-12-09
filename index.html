@@ -29,9 +29,9 @@
       <label for="host">Broker Host:</label><br />
       <input type="text" id="host" name="host" value="" /><br />
       <label for="port">Broker Port Number:</label><br />
-      <input type="text" id="port" name="port" value="" /><br />
+      <input type="number" id="port" name="port" value="" /><br />
       <label for="rfid">RFID Number</label><br />
-      <input type="number" id="rfid" name="rfid" value="" /><br />
+      <input type="text" id="rfid" name="rfid" value="" /><br />
       <label for="aor">Area of Responsibility</label><br />
       <select id="aor" name="aor">
         <option value="kaduna">1 Div</option>
@@ -42,7 +42,7 @@
         <option value="kaduna">Kaduna</option>
         <option value="abuja">Abuja</option></select
       ><br /><br />
-      <button id="saveconfig" onclick="saveConfig()">Save Config</button>
+      <button type="button" id="saveconfig">Save Config</button>
     </form>
   </body>
 

@@ -2,26 +2,29 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const { SerialPort } = require('serialport')
-const tableify = require('tableify')
+const { SerialPort } = require("serialport");
+const tableify = require("tableify");
+const fs = require("fs");
+
+/*Start Ports Functions*/
 
 async function listSerialPorts() {
   await SerialPort.list().then((ports, err) => {
-    if(err) {
-      document.getElementById('error').textContent = err.message
-      return
+    if (err) {
+      document.getElementById("error").textContent = err.message;
+      return;
     } else {
-      document.getElementById('error').textContent = ''
+      document.getElementById("error").textContent = "";
     }
-    console.log('ports', ports);
+    // console.log("ports", ports);
 
     if (ports.length === 0) {
-      document.getElementById('error').textContent = 'No ports discovered'
+      document.getElementById("error").textContent = "No ports discovered";
     }
 
-    tableHTML = tableify(ports)
-    document.getElementById('ports').innerHTML = tableHTML
-  })
+    tableHTML = tableify(ports);
+    document.getElementById("ports").innerHTML = tableHTML;
+  });
 }
 
 function listPorts() {
@@ -29,17 +32,37 @@ function listPorts() {
   setTimeout(listPorts, 2000);
 }
 
-function saveConfig() {
-  const host = document.getElementById('host');
-  const port = document.getElementById('port');
-  const rfid = document.getElementById('rfid');
-  const aor = document.getElementById('aor');
-  const location = document.getElementById('location');
-  console.log({host, port, rfid, aor, location})
-}
-
 // Set a timeout that will check for new serialPorts every 2 seconds.
 // This timeout reschedules itself.
-setTimeout(listPorts, 2000);
 
-listSerialPorts()
+setTimeout(listPorts, 2000);
+listSerialPorts();
+
+/*End Ports Functions*/
+
+const button = document.getElementById("saveconfig");
+
+button.addEventListener("click", () => {
+  const host = document.forms[0].elements["host"].value;
+  const port = Number(document.forms[0].elements["port"].value);
+  const rfid = document.forms[0].elements["rfid"].value;
+  const aor = document.forms[0].elements["aor"].value;
+  const location = document.forms[0].elements["location"].value;
+  let data = { host, port, rfid, aor, location };
+  data = JSON.stringify(data);
+
+  fs.mkdir("./config", (err) => {
+    if (!err) {
+      console.log("Directory Created Successfully!");
+    } else {
+      console.log("Error Creating Directory!", err);
+    }
+  });
+  fs.writeFile("./config/naphimis.json", data, (err) => {
+    if (!err) {
+      console.log("File Written Successfully!", data);
+    } else {
+      console.log("Error Writing File!", err);
+    }
+  });
+});
